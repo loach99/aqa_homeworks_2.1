@@ -98,14 +98,15 @@ public class OrderTest {
         assertEquals("Поле обязательно для заполнения", errorMessage.getText().trim());
     }
 
-    @Test
-    void shouldTestChangeColorOfCheckBoxIfInvalid() {
-        driver.get("http://localhost:9999");
-        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Жанна Лиман");
-        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79876543210");
-        driver.findElement(By.className("button")).click();
-        WebElement checkbox = driver.findElement(By.className("checkbox__box"));
-        assertTrue(checkbox.isDisplayed());
-        assertTrue(checkbox.getCssValue("border-color").contains("rgba(255, 92, 92, 1)"));
-    }
+   @Test
+void shouldTestChangeColorOfCheckBoxIfInvalid() {
+    driver.get("http://localhost:9999");
+    driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Жанна Лиман");
+    driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79876543210");
+    driver.findElement(By.className("button")).click();
+    WebElement checkbox = driver.findElement(By.className("checkbox__box"));
+    assertTrue(checkbox.isDisplayed());
+    assertTrue(checkbox.getAttribute("class").contains("input_invalid"));
+}
+
 }
