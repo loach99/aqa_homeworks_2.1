@@ -28,9 +28,9 @@ public class OrderTest {
         options.addArguments("disable-infobars");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
-        options.addArguments("--headless");  // Режим без головы
+        options.addArguments("--headless");
         options.addArguments("--disable-extensions");
-        options.addArguments("--disable-gpu");  // Особенно на Linux
+        options.addArguments("--disable-gpu");
         driver = new ChromeDriver(options);
     }
 
@@ -44,9 +44,8 @@ public class OrderTest {
     @Test
     void shouldTestSuccessOrderIfCorrectFilling() {
         driver.get("http://localhost:9999");
-        List<WebElement> elements = driver.findElements(By.className("input__control"));
-        elements.get(0).sendKeys("Жанна Лиман");
-        elements.get(1).sendKeys("+79876543210");
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Жанна Лиман");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79876543210");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
         String text = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
@@ -56,61 +55,57 @@ public class OrderTest {
     @Test
     void shouldTestWarnIfIncorrectTel() {
         driver.get("http://localhost:9999");
-        List<WebElement> elements = driver.findElements(By.className("input__control"));
-        elements.get(0).sendKeys("Жанна Лим");
-        elements.get(1).sendKeys("+798765");
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Жанна Лим");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+798765");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
-        elements = driver.findElements(By.className("input__sub"));
-        String text = elements.get(1).getText();
-        assertEquals("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.", text.trim());
+        WebElement errorMessage = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub"));
+        assertTrue(errorMessage.isDisplayed());
+        assertEquals("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.", errorMessage.getText().trim());
     }
 
     @Test
     void shouldTestWarnIfNoName() {
         driver.get("http://localhost:9999");
-        List<WebElement> elements = driver.findElements(By.className("input__control"));
-        elements.get(1).sendKeys("+79876543210");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79876543210");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
-        elements = driver.findElements(By.className("input__sub"));
-        String text = elements.get(0).getText();
-        assertEquals("Поле обязательно для заполнения", text.trim());
+        WebElement errorMessage = driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub"));
+        assertTrue(errorMessage.isDisplayed());
+        assertEquals("Поле обязательно для заполнения", errorMessage.getText().trim());
     }
 
     @Test
     void shouldTestWarnIfIncorrectName() {
         driver.get("http://localhost:9999");
-        List<WebElement> elements = driver.findElements(By.className("input__control"));
-        elements.get(0).sendKeys("Jeanny");
-        elements.get(1).sendKeys("+79876543210");
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Jeanny");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79876543210");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
-        elements = driver.findElements(By.className("input__sub"));
-        String text = elements.get(0).getText();
-        assertEquals("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.", text.trim());
+        WebElement errorMessage = driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub"));
+        assertTrue(errorMessage.isDisplayed());
+        assertEquals("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.", errorMessage.getText().trim());
     }
 
     @Test
     void shouldTestWarnIfNoTel() {
         driver.get("http://localhost:9999");
-        List<WebElement> elements = driver.findElements(By.className("input__control"));
-        elements.get(0).sendKeys("Жанна Лим");
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Жанна Лим");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
-        elements = driver.findElements(By.className("input__sub"));
-        String text = elements.get(1).getText();
-        assertEquals("Поле обязательно для заполнения", text.trim());
+        WebElement errorMessage = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub"));
+        assertTrue(errorMessage.isDisplayed());
+        assertEquals("Поле обязательно для заполнения", errorMessage.getText().trim());
     }
 
     @Test
     void shouldTestChangeColorOfCheckBoxIfInvalid() {
         driver.get("http://localhost:9999");
-        List<WebElement> elements = driver.findElements(By.className("input__control"));
-        elements.get(0).sendKeys("Жанна Лиман");
-        elements.get(1).sendKeys("+79876543210");
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Жанна Лиман");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79876543210");
         driver.findElement(By.className("button")).click();
-        String text = driver.findElement(By.className("checkbox__text")).getCssValue("color");
-        assertEquals("rgba(255, 92, 92, 1)", text);
+        WebElement checkbox = driver.findElement(By.className("checkbox__box"));
+        assertTrue(checkbox.isDisplayed());
+        assertTrue(checkbox.getCssValue("border-color").contains("rgba(255, 92, 92, 1)"));
     }
 }
