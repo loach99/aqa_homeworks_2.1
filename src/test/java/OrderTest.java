@@ -28,8 +28,9 @@ public class OrderTest {
         options.addArguments("disable-infobars");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
-        options.addArguments("--headless"); // только если обязательно
+        options.addArguments("--headless");  // Режим без головы
         options.addArguments("--disable-extensions");
+        options.addArguments("--disable-gpu");  // Особенно на Linux
         driver = new ChromeDriver(options);
     }
 
