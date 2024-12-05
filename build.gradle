@@ -9,15 +9,15 @@ sourceCompatibility = 11
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
-    testImplementation 'org.seleniumhq.selenium:selenium-chrome-driver:3.141.59'
-    testImplementation "io.github.bonigarcia:webdrivermanager:4.4.0"
+    // Обновленная версия Selenium (4.x)
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.10.0' // или последняя версия
+    testImplementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.10.0' // или последняя версия
+    testImplementation "io.github.bonigarcia:webdrivermanager:5.3.0" // или последняя версия WebDriverManager
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.7.1'
 }
 
