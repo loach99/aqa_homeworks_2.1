@@ -18,7 +18,7 @@ public class OrderTest {
 
     @BeforeAll
     static void setUpAll() {
-        WebDriverManager.chromedriver().driverVersion("131.0.6778.85").setup();
+        WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
