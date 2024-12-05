@@ -16,10 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OrderTest {
     private WebDriver driver;
 
-
     @BeforeAll
-        static void setUpAll() {
-        //System.setProperty("webdriver.chrome.driver", "webdriver//chromedriver");
+    static void setUpAll() {
         WebDriverManager.chromedriver().setup();
     }
 
@@ -30,9 +28,8 @@ public class OrderTest {
         options.addArguments("disable-infobars");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
-        options.addArguments("--headless");
+        options.addArguments("--headless"); // только если обязательно
         options.addArguments("--disable-extensions");
-        options.addArguments("--no-sandbox");
         driver = new ChromeDriver(options);
     }
 
@@ -47,7 +44,7 @@ public class OrderTest {
     void shouldTestSuccessOrderIfCorrectFilling() {
         driver.get("http://localhost:9999");
         List<WebElement> elements = driver.findElements(By.className("input__control"));
-        elements.get(0).sendKeys("Мария Гребенькова");
+        elements.get(0).sendKeys("Жанна Лиман");
         elements.get(1).sendKeys("+79876543210");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
@@ -59,7 +56,7 @@ public class OrderTest {
     void shouldTestWarnIfIncorrectTel() {
         driver.get("http://localhost:9999");
         List<WebElement> elements = driver.findElements(By.className("input__control"));
-        elements.get(0).sendKeys("Мария Гре");
+        elements.get(0).sendKeys("Жанна Лим");
         elements.get(1).sendKeys("+798765");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
@@ -84,7 +81,7 @@ public class OrderTest {
     void shouldTestWarnIfIncorrectName() {
         driver.get("http://localhost:9999");
         List<WebElement> elements = driver.findElements(By.className("input__control"));
-        elements.get(0).sendKeys("Maria");
+        elements.get(0).sendKeys("Jeanny");
         elements.get(1).sendKeys("+79876543210");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
@@ -97,7 +94,7 @@ public class OrderTest {
     void shouldTestWarnIfNoTel() {
         driver.get("http://localhost:9999");
         List<WebElement> elements = driver.findElements(By.className("input__control"));
-        elements.get(0).sendKeys("Мария Гре");
+        elements.get(0).sendKeys("Жанна Лим");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
         elements = driver.findElements(By.className("input__sub"));
@@ -109,12 +106,10 @@ public class OrderTest {
     void shouldTestChangeColorOfCheckBoxIfInvalid() {
         driver.get("http://localhost:9999");
         List<WebElement> elements = driver.findElements(By.className("input__control"));
-        elements.get(0).sendKeys("Мария Гребенькова");
+        elements.get(0).sendKeys("Жанна Лиман");
         elements.get(1).sendKeys("+79876543210");
         driver.findElement(By.className("button")).click();
         String text = driver.findElement(By.className("checkbox__text")).getCssValue("color");
         assertEquals("rgba(255, 92, 92, 1)", text);
     }
-
-
 }
