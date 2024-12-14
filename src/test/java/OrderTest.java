@@ -98,15 +98,18 @@ public class OrderTest {
         assertEquals("Поле обязательно для заполнения", errorMessage.getText().trim());
     }
 
-   @Test
+ @Test
 void shouldTestChangeColorOfCheckBoxIfInvalid() {
-    driver.get("http://localhost:9999");
-    driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Жанна Лиман");
-    driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79876543210");
-    driver.findElement(By.className("button")).click();
-    WebElement checkbox = driver.findElement(By.className("checkbox__box"));
-    assertTrue(checkbox.isDisplayed());
-    assertTrue(checkbox.getAttribute("class").contains("input_invalid"));
+    this.driver.get("http://localhost:9999");
+    List<WebElement> elements = this.driver.findElements(By.className("input__control"));
+    elements.get(0).sendKeys("\u041c\u0430\u0440\u0438\u044f \u0413\u0440\u0435\u0431\u0435\u043d\u044c\u043a\u043e\u0432\u0430");
+    elements.get(1).sendKeys("+79876543210");
+    this.driver.findElement(By.className("button")).click();
+    WebElement checkboxText = this.driver.findElement(By.className("checkbox__text"));
+    Assertions.assertNotNull(checkboxText, "Элемент checkbox__text не найден");
+    String color = checkboxText.getCssValue("color");
+    System.out.println("Полученный цвет: " + color); 
+    Assertions.assertEquals("rgba(255, 92, 92, 1)", color, "Цвет текста не совпадает с ожидаемым");
 }
 
 }
