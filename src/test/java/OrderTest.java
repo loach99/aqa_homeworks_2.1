@@ -101,7 +101,7 @@ public class OrderTest {
 
 @Test
 void EmptyCheckbox() {
-    driver.findElement(By.cssSelector("[type='text']")).sendKeys("Иванов-Петров Иван");
+    driver.findElement(By.cssSelector("[type='text']")).sendKeys("Жанна Лиман");
         driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+79998887766");
         driver.findElement(By.cssSelector(".button__text")).click();
         String text = driver.findElement(By.cssSelector("[data-test-id='agreement'].input_invalid .checkbox__text")).getText();
