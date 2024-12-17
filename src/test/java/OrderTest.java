@@ -101,16 +101,14 @@ public class OrderTest {
 
  @Test
 void shouldTestChangeColorOfCheckBoxIfInvalid() {
-    this.driver.get("http://localhost:9999");
-    List<WebElement> elements = this.driver.findElements(By.className("input__control"));
-    elements.get(0).sendKeys("\u041c\u0430\u0440\u0438\u044f \u0413\u0440\u0435\u0431\u0435\u043d\u044c\u043a\u043e\u0432\u0430");
-    elements.get(1).sendKeys("+79876543210");
-    this.driver.findElement(By.className("button")).click();
-    WebElement checkboxText = this.driver.findElement(By.className("checkbox__text"));
-    Assertions.assertNotNull(checkboxText, "Элемент checkbox__text не найден");
-    String color = checkboxText.getCssValue("color");
-    System.out.println("Полученный цвет: " + color); 
-    Assertions.assertEquals("rgba(255, 92, 92, 1)", color, "Цвет текста не совпадает с ожидаемым");
+         driver.get("http://localhost:9999");
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Жанна Лиман");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79876543210");
+        driver.findElement(By.className("button")).click();
+        WebElement checkboxError = driver.findElement(By.cssSelector("[data-test-id='agreement'].input_invalid"));
+        assertTrue(checkboxError.isDisplayed(), "Ошибка для чекбокса не появилась");
+        WebElement checkboxErrorMessage = driver.findElement(By.cssSelector("[data-test-id='agreement'].input_invalid .input__sub"));
+        assertTrue(checkboxErrorMessage.isDisplayed(), "Сообщение об ошибке для чекбокса не отображается");
 }
 
 }
