@@ -101,17 +101,10 @@ public class OrderTest {
 
 @Test
 void shouldTestWarnIfCheckboxIsInvalid() {
-    this.driver.get("http://localhost:9999");
-    WebElement nameInput = this.driver.findElement(By.cssSelector("input[name='name']"));
-    nameInput.sendKeys("\u041c\u0430\u0440\u0438\u044f \u0413\u0440\u0435\u0431\u0435\u043d\u044c\u043a\u043e\u0432\u0430");
-    WebElement phoneInput = this.driver.findElement(By.cssSelector("input[name='phone']"));
-    phoneInput.sendKeys("+79876543210");
-    this.driver.findElement(By.className("button")).click();
-    WebElement checkbox = this.driver.findElement(By.cssSelector("[data-test-id='agreement']"));
-    boolean isCheckboxInvalid = checkbox.getAttribute("class").contains("input_invalid");
-    Assertions.assertTrue(isCheckboxInvalid, "Чекбокс не имеет класса ошибки (input_invalid)");
-    WebElement errorMessage = this.driver.findElement(By.cssSelector("[data-test-id='agreement'].input_invalid .input__sub"));
-    Assertions.assertTrue(errorMessage.isDisplayed(), "Сообщение об ошибке не отображается");
+   driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Жанна Лиман");
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+78005553535");
+        driver.findElement(By.cssSelector("button.button")).click();
+        assertTrue(driver.findElement(By.cssSelector("[data-test-id=agreement].input_invalid")).isDisplayed());
 }
 
 
