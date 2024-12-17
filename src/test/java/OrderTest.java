@@ -99,16 +99,16 @@ public class OrderTest {
         assertEquals("Поле обязательно для заполнения", errorMessage.getText().trim());
     }
 
- @Test
+@Test
 void shouldTestChangeColorOfCheckBoxIfInvalid() {
-         driver.get("http://localhost:9999");
-        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Жанна Лиман");
-        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79876543210");
-        driver.findElement(By.className("button")).click();
-        WebElement checkboxError = driver.findElement(By.cssSelector("[data-test-id='agreement'].input_invalid"));
-        assertTrue(checkboxError.isDisplayed(), "Ошибка для чекбокса не появилась");
-        WebElement checkboxErrorMessage = driver.findElement(By.cssSelector("[data-test-id='agreement'].input_invalid .input__sub"));
-        assertTrue(checkboxErrorMessage.isDisplayed(), "Сообщение об ошибке для чекбокса не отображается");
+    driver.get("http://localhost:9999");
+    driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Жанна Лиман");
+    driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79876543210");
+    driver.findElement(By.className("button")).click();
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test-id='agreement'].input_invalid .input__sub")));
+    assertTrue(errorMessage.isDisplayed(), "Сообщение об ошибке не отображается.");
+    assertEquals("Поле обязательно для заполнения", errorMessage.getText().trim());
 }
 
 }
