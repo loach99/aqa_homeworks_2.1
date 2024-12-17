@@ -100,15 +100,12 @@ public class OrderTest {
     }
 
 @Test
-void shouldTestChangeColorOfCheckBoxIfInvalid() {
-    driver.get("http://localhost:9999");
-    driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Жанна Лиман");
-    driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79876543210");
-    driver.findElement(By.className("button")).click();
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test-id='agreement'].input_invalid .input__sub")));
-    assertTrue(errorMessage.isDisplayed(), "Сообщение об ошибке не отображается.");
-    assertEquals("Поле обязательно для заполнения", errorMessage.getText().trim());
+void EmptyCheckbox() {
+    driver.findElement(By.cssSelector("[type='text']")).sendKeys("Иванов-Петров Иван");
+        driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+79998887766");
+        driver.findElement(By.cssSelector(".button__text")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id='agreement'].input_invalid .checkbox__text")).getText();
+        assertEquals("Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй", text.trim());
 }
 
 }
