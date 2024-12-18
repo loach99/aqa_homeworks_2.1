@@ -101,7 +101,8 @@ public class OrderTest {
 
 @Test
 void shouldTestWarnIfCheckboxIsInvalid() {
-   driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Жанна Лиман");
+        driver.get("http://localhost:9999");
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Жанна Лиман");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+78005553535");
         driver.findElement(By.cssSelector("button.button")).click();
         assertTrue(driver.findElement(By.cssSelector("[data-test-id=agreement].input_invalid")).isDisplayed());
